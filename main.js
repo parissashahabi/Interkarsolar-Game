@@ -75,6 +75,9 @@ function Test1() {
 }
 
 let patientsList = [];
+function gameOver() {
+    
+}
 function takeTest( p , t ) {
 
     for(let i = 0 ; i < p.length ; ++i ) {
@@ -83,17 +86,7 @@ function takeTest( p , t ) {
     console.log("budget:",society1.budget);
     console.log("min:",minCost);
 
-    if(society1.budget < minCost || patientsList.length == is_sick.length)
-    {
-        flag = true;
-        patientsList.forEach(i => {
-            console.log("patients list:",i);
-        })
-
-        selected.forEach( i => {
-            console.log("selected:",i);
-        })
-        }
+   
 
     p.forEach(element => {
         if( society1.peopleList[element].difficulty + society1.testList[t].testDifficulty < 1 && society1.budget - society1.testList[t].cost >= 0 ) {
@@ -185,6 +178,19 @@ while(p.length > 0) {
     p.pop();
 }
 console.log(p);
+if(society1.budget < minCost || patientsList.length == is_sick.length)
+{
+    flag = true;
+    patientsList.forEach(i => {
+        console.log("patients list:",i);
+    })
+
+    selected.forEach( i => {
+        console.log("selected:",i);
+    })
+    alert("Game is Over. \br your final score: " + score);
+    location.reload();
+    }
 }
 
 function displayTests( t ) {

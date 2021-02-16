@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+<body>
+    <h1>budget:</h1>
+    <div id="show-budget" onload="showBudget()">
+    </div>
+    <div>
+        <div>
+            <button class="BTN" id="test-0" onmouseover="displayTests(0);" onmouseout="clear();" onclick="document.getElementById('test-0').style.background= 'yellow'; testNumber(0);">test 1</button>
+        </div>
+        <div>
+            <button class="BTN" id="test-1" onmouseover="displayTests(1);" onclick="document.getElementById('test-1').style.background= 'yellow'; testNumber(1);">test 2</button>
+        </div>
+        <div>
+            <button class="BTN" id="test-2" onmouseover="displayTests(2);" onclick="document.getElementById('test-2').style.background= 'yellow'; testNumber(2);">test 3</button>
+        </div>
+        <div>
+            <button class="BTN" id="test-3" onmouseover="displayTests(3);" onclick="document.getElementById('test-3').style.background= 'yellow'; testNumber(3);">test 4</button>
+        </div>
+        <div>
+            <button class="BTN" id="test-4" onmouseover="displayTests(4);" onclick="document.getElementById('test-4').style.background= 'yellow'; testNumber(4);">test 5</button>
+        </div>
+        <div>
+            <button class="BTN" id="test-5" onmouseover="displayTests(5);" onclick="document.getElementById('test-5').style.background= 'yellow'; testNumber(5);">test 6</button>
+        </div>
+        <div>
+            <button class="BTN" id="test-6" onmouseover="displayTests(6);" onclick="document.getElementById('test-6').style.background= 'yellow'; testNumber(6);">test 7</button>
+        </div>
+    </div>
+    <h3>Test specifications: </h3>
+    <div id="test-specifications"></div>
+    <div>
+        <div id="person-0">
+            <button class="BTN" id="btn-0" onclick="document.getElementById('btn-0').style.background= 'red'; pushToArray(0);">person 1 </button>
+        </div>
+        <div id="person-1">
+            <button class="BTN" id="btn-1" onclick="document.getElementById('btn-1').style.background= 'red'; pushToArray(1)">person 2</button>
+        </div>
+        <div id="person-2">
+            <button class="BTN" id="btn-2" onclick="document.getElementById('btn-2').style.background= 'red'; pushToArray(2)">person 3</button>
+        </div>
+        <div id="person-3">
+            <button class="BTN" id="btn-3" onclick="document.getElementById('btn-3').style.background= 'red'; pushToArray(3)">person 4</button>
+        </div>
+        <div id="person-4">
+            <button class="BTN" id="btn-4" onclick="document.getElementById('btn-4').style.background= 'red'; pushToArray(4)">person 5</button>
+        </div>
+        <div id="person-5">
+            <button class="BTN" id="btn-5" onclick="document.getElementById('btn-5').style.background= 'red'; pushToArray(5)">person 6</button>
+        </div>
+        <div id="person-6">
+            <button class="BTN" id="btn-6" onclick="document.getElementById('btn-6').style.background= 'red'; pushToArray(6)">person 7</button>
+        </div>
+        <div id="person-7">
+            <button class="BTN" id="btn-7" onclick="document.getElementById('btn-7').style.background= 'red'; pushToArray(7);">person 8</button>
+        </div>
+        <div id="person-8">
+            <button class="BTN" id="btn-8" onclick="document.getElementById('btn-8').style.background= 'red'; pushToArray(8)">person 9</button>
+        </div>
+        <div id="person-9">
+            <button class="BTN" id="btn-9" onclick="document.getElementById('btn-9').style.background= 'red'; pushToArray(9)">person 10</button>
+        </div>
+        <div id="person-10">
+            <button class="BTN" id="btn-10" onclick="document.getElementById('btn-10').style.background= 'red'; pushToArray(10)">person 11</button>
+        </div>
+        <div id="person-11">
+            <button class="BTN" id="btn-11" onclick="document.getElementById('btn-11').style.background= 'red'; pushToArray(11)">person 12</button>
+        </div>
+        <div id="person-12">
+            <button class="BTN" id="btn-12" onclick="document.getElementById('btn-12').style.background= 'red'; pushToArray(12)">person 13</button>
+        </div>
+        <div id="person-13">
+            <button class="BTN" id="btn-13" onclick="document.getElementById('btn-13').style.background= 'red'; pushToArray(13)">person 14</button>
+        </div>
+    </div>
+    <div>
+        <button onclick=" resetButton(); Test1(); document.getElementById('show-budget').innerHTML = society1.budget">Test</button>
+    </div>
+
+
+    <script src="main.js"></script>
+
+</body>
+</html>

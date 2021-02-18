@@ -44,17 +44,50 @@ society1.build_tl();
 
 showBudget ();
 
-function displayPeople () {
-    for(let i=0;i<society1.peopleList.length ; ++ i) {
-        document.getElementById('people').insertAdjacentHTML('beforeend',`  <button> person ${i+1} </button>  `);
-    }
+let p1 = [];
+
+function pushToArray ( n ) {
+    p1.push(n);
+    console.log(`person ${n} added successfully!`);
 }
 
-function displayTests () {
-    for(let i=0;i<society1.testList.length ; ++ i) {
-        document.getElementById('tests').insertAdjacentHTML('beforeend',`  <button> test ${i+1} </button>`  );
+let testnum;
+function testNumber( n ) {
+    testnum = n ;
+    //console.log(is_sick.length * society1.testList[testnum].cp);
+    console.log(`test ${n} selected successfully!` , society1.testList[n]);
+} 
+
+
+const people_place_holder = document.getElementById('people');
+function displayPeople () {
+    for(let i=0;i<society1.peopleList.length ; ++ i) {
+        people_place_holder.insertAdjacentHTML('beforeend',`  <button class="personButton"  data-pn="${i}"> person ${i+1} </button>  `);
     }
 }
+people_place_holder.addEventListener('click', function(event){
+    const target = event.target;
+    if(target.tagName == 'BUTTON') {
+        const person_number = target.dataset.pn ;
+        console.log(person_number);
+        pushToArray(person_number);
+    }
+});
+
+const test_place_holder = document.getElementById('tests');
+function displayTests () {
+    for(let i=0;i<society1.testList.length ; ++ i) {
+        test_place_holder.insertAdjacentHTML('beforeend',`  <button class="testButton"  data-tn="${i}"> test ${i+1} </button>  `);
+    }
+}
+test_place_holder.addEventListener('click', function(event){
+    const target = event.target;
+    if(target.tagName == 'BUTTON') {
+        const test_number = target.dataset.tn ;
+        console.log(test_number);
+        testNumber(test_number);
+    }
+});
 
 displayTests();
 displayPeople();
@@ -80,19 +113,7 @@ let minCost = Math.min.apply(Math,costList);
 let flag = false;
 let score = 100;
 let selected = new Set();
-let p1 = [];
 
-function pushToArray ( n ) {
-    p1.push(n);
-    console.log(`person ${n} added successfully!`);
-}
-
-let testnum;
-function testNumber( n ) {
-    testnum = n ;
-    //console.log(is_sick.length * society1.testList[testnum].cp);
-    console.log(`test ${n} selected successfully!` , society1.testList[n]);
-}
 
 function Test1() {
     if(!flag) takeTest(p1,testnum);

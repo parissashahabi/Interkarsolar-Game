@@ -6,15 +6,13 @@ class Person {
 }
 
 class Test {
-    constructor(cp, pod,testDifficulty,cost) {
+    constructor(cp,testDifficulty,cost) {
       this.cp = parseFloat(cp);
-      this.pod = parseFloat(pod);
       this.testDifficulty = parseFloat(testDifficulty);
       this.cost = parseInt(cost);
     }
 }
-let sub_patient_list = [];
-let sub_nonpatient_list = [];
+
 class Society{
     constructor(nPerson,budget) {
         this.nPerson = parseInt(nPerson);
@@ -29,43 +27,17 @@ class Society{
         return personList;
     }
     build_tl () {
-        let testList = [];
-       
-        p1.forEach( e => {
-             if(society1.peopleList[e].isIll == true) {
-            sub_patient_list.push( e );
-            console.log("is sick",e);
-        } else {
-            sub_nonpatient_list.push(e);
-            console.log("is not sick",e);
-        }
-        for(let i = 1 ; i < sub_patient_list.length ; ++i ) {
-            for(let j = p1.length - i  ; j > 1; --j ) {
-                let test = new Test((i/sub_patient_list.length),(i/(i+j)),Math.random().toFixed(2), Math.floor(Math.random() * 10) + 1);
-                
-                testList.push( test );
-                for(let k = 0 ; k < testList.length - 1; k++) {
-                    if(testList[k].cp == test.cp && testList[k].pod == test.pod) {
-                        testList.pop();
-                    }
-                }
-            }
-        }
-        
-        })
+        let testList = [new Test(0.5,0.2,3000),new Test(0.6,0.3,4000),new Test(0.2,0.1,1000),new Test(0.8,0.7,5000),new Test(0.25,0.2,2000),new Test(0.7,0.8,7000),new Test(0.1,0.1,1000),new Test(0.5,0.5,5000),new Test(0.45,0.3,4500),new Test(0.65,0.65,6500)];
        console.log(testList);
-       if(testList.length == 0) {
-           alert("please choose another set.");
-           location.reload();
-       }
         this.testList = testList;
         return testList;
     }
 }
 
-let society1  = new Society(20,Math.floor(Math.random() * 3000) + 1000);
+let society1  = new Society(60,100000);
 
 society1.build_pl();
+society1.build_tl();
 
 showBudget ();
 
@@ -83,8 +55,7 @@ function testNumber( n ) {
 
 function displayTestsSpecifications( t ) {
     
-    document.getElementById('test-specifications').innerHTML = `درصد درستی: ${society1.testList[t].cp}
-    درصد تشخیص: ${society1.testList[t].pod}
+    document.getElementById('test-specifications').innerHTML = ` درصد تشخیص: ${society1.testList[t].cp}
     سختی: ${society1.testList[t].testDifficulty}
     هزینه:  ${society1.testList[t].cost }
     ` ; 
@@ -131,8 +102,9 @@ test_place_holder.addEventListener('mouseover', function(event){
 });
 
 displayPeople();
+displayTests();
 
-let patient_list= [];
+let patient_list= []; 
 for(let i = 0 ; i<society1.peopleList.length ; ++i ) {
     if(society1.peopleList[i].isIll == true ) {
         patient_list.push(i);
@@ -142,15 +114,7 @@ console.log("These people are sick: ",patient_list);
 
 console.log(society1.peopleList);
 console.log(society1.testList);
-function min_cost() {
-    let costList = [];
-    for (let i = 0; i < 7 ; i++) {
-      costList.push(society1.testList[i].cost);
-    }
-    let minCost = Math.min.apply(Math,costList);
-    return minCost;
 
-}
 
 let flag = false;
 let score = 1000;
@@ -164,6 +128,8 @@ let patientsList = [];
 
 function takeTest( p , t ) {
 
+    document.getElementById('may-be-sick').innerHTML = " ";
+    let sub_patient_list = [];
     for(let i = 0 ; i < p.length ; ++i ) {
         selected.add( p[ i ] );
     }
@@ -171,10 +137,17 @@ function takeTest( p , t ) {
     console.log("budget:",society1.budget);
 
    p.forEach( e => {
-    if( society1.peopleList[e].difficulty + society1.testList[t].testDifficulty < 1 && society1.budget - society1.testList[t].cost >= 0 ) {
+    if( society1.peopleList[e].difficulty + society1.testList[t].testDifficulty <= 1 && society1.budget - society1.testList[t].cost >= 0 ) {
         
         society1.budget -= society1.testList[t].cost;
         society1.peopleList[e].difficulty += society1.testList[t].testDifficulty;
+        if(society1.peopleList[e].isIll == true) {
+            sub_patient_list.push( e );
+            console.log("is sick",e);
+        }
+        else {
+            console.log("is not sick",e);
+        }
     } else {
         if( society1.peopleList[e].difficulty + society1.testList[t].testDifficulty >= 1) {
             alert("you cannot try this test on this person");
@@ -188,41 +161,30 @@ function takeTest( p , t ) {
     console.log("n_cp: " , n_cp);
     let randomSick = getRandom(sub_patient_list,n_cp);
     console.log("random sick: ",randomSick);
-    let n_pod = parseInt(n_cp / society1.testList[t].pod) - n_cp;
-    console.log("n_pod: " , n_pod);
-    let may_be_sick = [];
-    let may_not_be_sick = [];
-    let p_randomSick_list = [];
-    p_randomSick_list = p.filter(n => !randomSick.includes(n));
-    console.log("p - random sick list: ",p_randomSick_list);
-    let randomList = getRandom(p_randomSick_list,n_pod);
-    randomList.forEach( e => {
-         if( society1.peopleList[e].isIll == true ) {
-            may_not_be_sick.push(e);
-        } else {
-            may_be_sick.push(e);
-        }
-    })
-    console.log("random list: ",randomList);
-    may_be_sick = [...may_be_sick,...randomSick];
-    console.log("may be sick: ",may_be_sick);
-    console.log("may not be sick: ",may_not_be_sick);
-    may_be_sick = [...may_be_sick,...may_not_be_sick];
-    for(let j = 0 ; j < may_be_sick.length;j++) {
-        document.getElementById('may-be-sick').insertAdjacentHTML('beforeend' , `, ${may_be_sick[j]}`);
-    }
-    // for(let j = 0 ; j < may_not_be_sick.length;j++) {
-    //     document.getElementById('may-not-be-sick').insertAdjacentHTML('beforeend' , `, ${may_not_be_sick[j]}`);
-    //    }
+    console.log("patient list1: ",patientsList);
+    patientsList = [...patientsList,...randomSick];
+    console.log("patient list2: ",patientsList);
 
+    for(let j = 0 ; j < patientsList.length;j++) {
+        document.getElementById('may-be-sick').insertAdjacentHTML('beforeend' , `, ${patientsList[j]}`);
+    }
+  
     while(p.length > 0) {
         p.pop();
     }
-    while(society1.testList.length > 0) {
-        society1.testList.pop();
+ 
+    if(society1.budget < 1000 || patientsList.length == patient_list.length)
+    {
+    flag = true;
+    patientsList.forEach(i => {
+        console.log(`patient list ${patientsList[i]}`);
+    })
+
+    alert("Game is Over. \br your final score: " + score);
+    location.reload();
     }
-    document.getElementById('tests').innerHTML = " ";
 }
+
 
 
 function resetButton() {
@@ -250,26 +212,26 @@ function getRandom(arr, n) {
     return result;
 }
 
-const finish_button_holder = document.getElementById('finish');
-finish_button_holder.addEventListener('click', function(event){
-    const target = event.target;
-    if(target.tagName == 'BUTTON') {
-        console.log(endGame(p1));
-        alert(`Your final score is ${endGame(p1)} !`);
-        location.reload();
-    }
-});
+// const finish_button_holder = document.getElementById('finish');
+// finish_button_holder.addEventListener('click', function(event){
+//     const target = event.target;
+//     if(target.tagName == 'BUTTON') {
+//         console.log(endGame(p1));
+//         alert(`Your final score is ${endGame(p1)} !`);
+//         location.reload();
+//     }
+// });
 
-function endGame(p) {
-    let count = 0;
-    p.forEach( e => {
-        if(society1.peopleList[e].isIll == true ) {
-            score += 100 ;
-            count++;
-        } else {
-            score -= 50;
-        }
-    })
-    score -= (patient_list.length - count) * 200;
-    return score;
-}
+// function endGame(p) {
+//     let count = 0;
+//     p.forEach( e => {
+//         if(society1.peopleList[e].isIll == true ) {
+//             score += 100 ;
+//             count++;
+//         } else {
+//             score -= 50;
+//         }
+//     })
+//     score -= (patient_list.length - count) * 200;
+//     return score;
+// }
